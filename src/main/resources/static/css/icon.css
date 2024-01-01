@@ -1,0 +1,68 @@
+.icon {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.icon-dashboard {
+    background-image: url(../asset/icon/dashboard.png);
+}
+
+.icon-logo {
+    background-image: url(../asset/icon/home-sweet-home.png);
+}
+
+.icon-user {
+    background-image: url(../asset/icon/user.png);
+}
+
+.icon-group {
+    background-image: url(../asset/icon/group.png);
+}
+
+.icon-report {
+    background-image: url(../asset/icon/report.png);
+}
+
+.icon-chart {
+    background-image: url(../asset/icon/chart.png);
+}
+
+.icon-search {
+    background-image: url(../asset/icon/search.png);
+}
+
+.icon-down {
+    background-image: url(../asset/icon/down-chevron.png);
+}
+
+.icon-left {
+    background-image: url(../asset/icon/left-arrow.png);
+}
+.icon-add-user{
+    background-image: url(../asset/icon/add-friend.png);
+}
+.icon-split{
+    background-image: url(../asset/icon/split.png);
+}
+.icon-show{
+    background-image: url(../asset/icon/eye.png);
+}
+.icon-move{
+    background-image: url(../asset/icon/shift.png);
+}
+
+.icon-filter{
+    background-image: url(../asset/icon/filter.png);
+}
+
+.icon-add{
+    background-image: url(../asset/icon/plus.png);
+}

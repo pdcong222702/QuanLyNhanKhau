@@ -1,0 +1,113 @@
+
+
+.itemSidebarNK ul{
+    width: 200px;
+    padding: 0;
+    list-style-type: none;
+}
+.itemSidebarNK ul li{
+    width: auto;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+}
+.itemSidebarNK ul li a{
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.itemSidebarNK ul li:hover,
+.itemSidebarNK ul li a:hover{
+    background-color: #3395FF;
+    color: white;
+}
+.col-sm-9{
+    display: flex;
+}
+small{
+    color: red;
+    margin: 10px 0px 0px 10px;
+}
+/*headerContent*/
+.headerContent{
+    display: flex;
+}
+.modal-body .row{
+    display: block;
+}
+
+#addNhanKhau input{
+    width: 400px;
+}
+.modal-body-add{
+    display: flex;
+}
+.backNK{
+    width: 550px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.backNK a{
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+.backNK a:hover{
+    color: #3395FF;
+}
+
+.searchNK{
+    margin-top: 20px;
+}
+
+/*style cardNK*/
+
+.cardNK{
+    width: 500px;
+    margin: auto;
+}
+
+.suaNK{
+    margin: 200px 0 0 20px;
+}
+
+/*Thông tin nhân khẩu*/
+.inforPopulation{
+    display: flex;
+}
+.desPopulation{
+    margin-left: 5px;
+}
+
+/*Gạch dưới*/
+.underlined p {
+    position: relative;
+    display: inline;
+}
+
+.underlined p::after {
+    content: "";
+    position: absolute;
+    bottom: -2px; /* Khoảng cách của gạch chân dưới so với văn bản */
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
+.underlined .short::after {
+    width: 50px; /* Độ dài gạch chân dưới cho từ ngắn */
+}
+
+.underlined .medium::after {
+    width: 100px; /* Độ dài gạch chân dưới cho từ trung bình */
+}
+
+.underlined .long::after {
+    width: 300px; /* Độ dài gạch chân dưới cho từ dài */
+}
+input{
+    width: 700px;
+}

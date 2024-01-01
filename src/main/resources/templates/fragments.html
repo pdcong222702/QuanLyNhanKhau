@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{css/main.css}">
+    <link rel="stylesheet" th:href="@{css/icon.css}">
+    <link rel="stylesheet" th:href="@{css/styleNK.css}">
+    <link rel="stylesheet" th:href="@{css/combobox.css}">
+    <link rel="stylesheet" th:href="@{css/house-hold.css}">
+    <link th:href="@{'https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'}" rel='stylesheet'>
+    <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'}"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/house-hold.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+            integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer">
+    </script>
+    <script>
+        function updateImageName(){
+            var fileInput = document.getElementById('fileInput');
+            var imageNameInput = document.getElementById('fileNameInput');
+            var fileName = fileInput.value.split('\\').pop();
+            imageNameInput.value = fileName;
+        }
+        function capitalizeAfterSpace(input) {
+            var words = input.value.split(" ");
+            for (var i = 0; i < words.length; i++) {
+                words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+            }
+            input.value = words.join(" ");
+        }
+
+        function validateForm() {
+            var input = document.getElementById("populationCode").value;
+            var regex = /^\d{12}$/;
+
+            if (input.length !== 12 || !regex.test(input)) {
+                alert("Dữ liệu không hợp lệ. Yêu cầu 12 ký tự từ 0-9.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    <title>QLNK</title>
+<body>
+    <!--sidebar!-->
+    <div th:fragment="sildebar" class="header">
+        <i class='bx bxs-dashboard' ></i>
+        <i class='bx bxs-building-house' ></i>
+        <h4>Quản lý hộ khẩu</h4>
+    </div>
+
+    <!--sidebar!-->
+    <div th:fragment="navbar" class="navbar">
+        <div class="navbar-item">
+            <i class='bx bx-home' ></i>
+            <span class="navbar-text">Trang chủ</span>
+        </div>
+        <a class="navbar-item navbar-item--active" th:href="@{/residence-booklet}">
+            <i class='bx bx-group' ></i>
+            <span class="navbar-text">Hộ khẩu</span>
+        </a>
+        <a class="navbar-item" th:href="@{/statics-population}">
+            <i class='bx bx-bar-chart-alt-2' ></i>
+            <span class="navbar-text">Thống kê</span>
+        </a>
+        <a class="navbar-item" th:href="@{/reflect}">
+            <i class='bx bx-notepad' ></i>
+            <span class="navbar-text">Phản ánh</span>
+        </a>
+    </div>
+
+
+    <!--content!-->
+    <div th:fragment="content-tittle" class="content-header">
+        <div class="content-header-combobox" style="margin-top: -6px">
+            <i class='bx bx-left-arrow-alt' ></i>
+            <span th:text="${tittle}"></span>
+        </div>
+    </div>
+
+
+    <!--filter!-->
+    <div th:fragment="filter" class="filter-wrapper" >
+        <div class="filter-text">
+            <div>Lọc sổ hộ khẩu điện tử</div>
+            <i class='bx bx-filter-alt'></i>
+        </div>
+        <div class="filter" id="filter">
+            <button type="button" class="btn-close " aria-label="Close" id="close"></button>
+            <div class="combobox-wrapper">
+                <label>Tỉnh/ Thành phố</label>
+                <select class="form-select" aria-label=".form-select-lg example" id="province" name="">
+                    <option value="">Chọn tỉnh</option>
+                </select>
+            </div>
+            <div class="combobox-wrapper">
+                <label>Quận/ Huyện</label>
+                <select class="form-select" aria-label=".form-select-lg example" id="district" name="">
+                    <option value="">Chọn quận</option>
+                </select>
+            </div>
+            <div class="combobox-wrapper">
+                <label>Phường/ Xã</label>
+                <select class="form-select" aria-label=".form-select-lg example" id="ward" name="">
+                    <option value="">Chọn phường</option>
+                </select>
+            </div>
+
+            <div class="filter-footer">
+                <hr>
+                <div class="filter-button">
+                    <button class="btn btn-secondary">Áp dụng</button>
+                    <button class="btn btn-primary">Mặc định</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+    <script src="./js/house-hold.js"></script>
+</body>
+</html>

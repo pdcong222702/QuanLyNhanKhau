@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thông tin nhân khẩu</title>
+  <!--<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />-->
+
+
+  <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'}" rel="stylesheet">
+  <script th:src="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'}"></script>
+  <link th:href="@{'https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'}" rel='stylesheet'>
+  <style>
+    .navbar {
+      width: 200px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+      box-shadow: inset 0 1.5px 2px 0 rgba(0, 0, 0, 0.1);
+    }
+    .navbar a{
+      text-decoration: none;
+      color: #1f1f1f;
+    }
+
+    .navbar-item {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      column-gap: 12px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .navbar-item--active, .navbar-item:hover {
+      background-color: #fbe9e7;
+      color: #FF6D00;
+    }
+  </style>
+</head>
+<body>
+    <div class="header" style=" height: 56px;
+                                    display: flex;
+                                    align-items: center;
+                                    column-gap: 16px;
+                                    padding-left: 20px;">
+      <i class='bx bxs-dashboard' ></i>
+      <i class='bx bxs-building-house' ></i>
+      <h4 style=" font-weight: 700;
+                        font-size: 20px;">Quản lý hộ khẩu</h4>
+    </div>
+
+  <div style="display: flex">
+    <div class="navbar" style=" width: 200px;
+                                    height: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    padding: 8px;
+                                    box-shadow: inset 0 1.5px 2px 0 rgba(0, 0, 0, 0.1);">
+      <div class="navbar-item" style="margin-top: 12px;
+                                            display: flex;
+                                            align-items: center;
+                                            column-gap: 12px;
+                                            padding: 8px 16px;
+                                            border-radius: 4px;
+                                            cursor: pointer;" >
+        <i class='bx bx-home' ></i>
+        <span class="navbar-text">Trang chủ</span>
+      </div>
+      <a class="navbar-item navbar-item--active" style="text-decoration: none" th:href="@{/residence-booklet}">
+        <i class='bx bx-group' ></i>
+        <span class="navbar-text">Hộ khẩu</span>
+      </a>
+      <a class="navbar-item" th:href="@{/statics-population}">
+        <i class='bx bx-bar-chart-alt-2' ></i>
+        <span class="navbar-text">Thống kê</span>
+      </a>
+      <a class="navbar-item" th:href="@{/reflect}">
+        <i class='bx bx-notepad' ></i>
+        <span class="navbar-text">Phản ánh</span>
+      </a>
+    </div>
+    <div style="background-color:#edf1f5;padding: 18px 0px 100px 8px;width: 100%" >
+      <div class="headerContent mt-3 ">
+        <div class="backNK">
+          <a th:href="@{/residence-booklet}" style="text-decoration: none;font-size: 18px;color: #1f1f1f">
+            <i class='bx bx-arrow-back'></i>
+            <span style="font-weight: bold">Tách hộ khẩu</span>
+          </a>
+        </div>
+      </div>
+      <div th:if="${session.message}">
+        <p class="alert alert-success" th:text="${session.message}"></p>
+      </div>
+      <div class="household" style="margin-left: 20px; ">
+        <div style="display: flex; margin-left: 10px;">
+          <div>Mã hộ khẩu: </div>
+          <div style="padding-left: 50px;" th:text="${residenceBooklet.residenceBookletCode}"></div>
+        </div>
+        <div style="display: flex; margin-left: 10px;">
+          <div>Mã khu vực: </div>
+          <div style="padding-left: 50px;" th:text="${residenceBooklet.bookletArea}"></div>
+        </div>
+        <div style="display: flex; margin-left: 10px;">
+          <div>Địa chỉ hộ khẩu: </div>
+          <div style="padding-left: 24px;" th:text="${residenceBooklet.address}"></div>
+        </div>
+      </div>
+      <div class="card-body" style="display: flex;margin-left: 14px">
+        <div class="master">
+          <div style="margin: 10px 0px 0px 4px; font-size: 16px;font-weight: bold">Thông tin chủ hộ</div>
+          <div class="item-main" style="background-color: #ffffff;box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1);display: flex">
+            <img th:src="@{/images/{name} (name=${populationMaster.imageName})}" style="width: 100px; height: 160px;">
+            <div class="item-content">
+              <div style="display: flex">
+                <p>Tên nhân khẩu: </p>
+                <p style="margin-left: 10px;margin-right: 10px;" th:text="${populationMaster.populationName}"></p>
+              </div >
+              <div style="display: flex">
+                <p>CCCD: </p>
+                <p style="margin-left: 70px;margin-right: 20px;" th:text="${populationMaster.populationCode}"></p>
+              </div>
+              <div style="display: flex">
+                <p>Ngày sinh: </p>
+                <p style="margin-left: 40px;margin-right: 10px;" th:text="${populationMaster.dob}"></p>
+              </div>
+              <div style="display: flex">
+                <p>Giới tính: </p>
+                <p style="margin-left: 50px;margin-right: 10px;" th:text="${populationMaster.gender}"></p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <form class="population" style="margin-left: 200px;" th:action="@{/getCheckbox}" method="get">
+          <div style="margin: 14px 0px 0px 8px; font-size: 16px  ; font-weight: bold">Thông tin nhân khẩu</div>
+          <div class="population-card" style="display: flex;" th:each="member : ${populationMember}"
+          >
+            <div class="item-main mt-1" style="background-color: #ffffff;display: flex;box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1);margin-bottom: 20px;" >
+              <img th:src="@{/images/{name} (name=${member.imageName})}"  style="width: 100px; height: 160px;">
+              <div class="item-content" style="margin-left: 12px">
+                <div style="display: flex">
+                  <p>Tên nhân khẩu: </p>
+                  <p style="margin-left: 10px;margin-right: 10px;" th:text="${member.populationName}"></p>
+                </div>
+                <div style="display: flex">
+                  <p>CCCD: </p>
+                  <p style="margin-left: 70px;margin-right: 10px;" th:text="${member.populationCode}"></p>
+                </div>
+                <div style="display: flex">
+                  <p>Ngày sinh: </p>
+                  <p style="margin-left: 40px;margin-right: 10px;" th:text="${member.dob}"></p>
+                </div >
+                <div style="display: flex">
+                  <p>Giới tính: </p>
+                  <p style="margin-left: 50px;margin-right: 10px;" th:text="${member.gender}"></p>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 46px;">
+              <div class="form-check" style="margin: 0 10px 0px 20px;">
+                <input type="checkbox"  th:name="check">
+                <label class="form-check-label" >
+                  Chọn để tách
+                </label>
+              </div>
+              <select class="form-select" aria-label=".form-select-lg example"
+                      style="margin-left: 20px;margin-top: 4px;"
+                      th:name="listRelationship"
+              >
+                <option th:each="r : ${relationship}" th:value="${r}" th:text="${r}"></option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Xac nhan</button>
+        </form>
+      </div>
+      <div class="set-up">
+        <div style="margin: 10px 0px 0px 18px; font-size: 16px; font-weight: bold">Thiết lập sổ hộ khẩu điện tự</div>
+        <form class="mt-1" style="background-color: #ffffff;margin-left: 20px;margin-right: 20px; width: 890px"
+              th:action="@{/split-residence-booklet}"
+              method="post"
+              th:object="${splitResidenceBooklet}"
+        >
+          <div style="margin-left: 160px">
+            <div class="form-group row">
+              <label class="col-sm-5 col-form-label">Mã sổ hộ khẩu</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control"  placeholder="Mã sổ hộ khẩu" th:field="*{residenceBookletCode}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label  class="col-sm-5 col-form-label">Mã khu vực</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control"  placeholder="Mã khu vực" th:field="*{bookletArea}">
+              </div>
+            </div>
+            <div class="form-group row" >
+              <label class="col-sm-5 col-form-label">Điạ chỉ hộ khẩu</label>
+              <div class="col-sm-9">
+                <input style="margin-bottom: 30px;" type="text" class="form-control"  placeholder="Địa chỉ hộ khẩu"
+                       th:field="*{address}"
+                >
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Xac nhan</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

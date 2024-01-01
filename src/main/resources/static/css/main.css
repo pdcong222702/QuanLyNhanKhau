@@ -1,0 +1,47 @@
+:root {
+    /* declare color */
+    --color-primary: #007AFF;
+    --color-hover: #3395FF;
+    --color-nav-hover: #E6F2FF;
+    --color-focus: #0062CC;
+    --color-disable: #66AFFF;
+    --color-row-select: #E6F2FF;
+    --color-secondary: #FF6D00;
+    --color-secondary-background: #FBE9E7; 
+    --color-border-default:#E0E0E0;
+    --color-delete: #DE3618;
+    --color-delete-hover: #feeeee;
+
+    /* declare size */
+    --header-height: 56px;
+    --sidebar-width: 240px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: Noto sans, sans-serif;
+    font-size: 14px;
+}
+
+@font-face {
+    font-family: Noto sans;
+    src: url(../asset/font/NotoSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: Noto sans;
+    src: url(../asset/font/NotoSans-Medium.ttf);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Noto sans;
+    src: url(../asset/font/NotoSans-Bold.ttf);
+    font-weight: 700;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}

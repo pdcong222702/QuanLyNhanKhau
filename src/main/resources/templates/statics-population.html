@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{css/main.css}">
+    <link rel="stylesheet" th:href="@{css/icon.css}">
+    <link rel="stylesheet" th:href="@{css/input.css}">
+    <link rel="stylesheet" th:href="@{css/combobox.css}">
+    <link rel="stylesheet" th:href="@{/css/house-hold.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/house-hold.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+            integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'}" rel="stylesheet">
+    <script th:src="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'}"></script>
+    <link th:href="@{'https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'}" rel='stylesheet'>
+    <title>Thống kê</title>
+    <style>
+        .input-loc {
+            background: #ffffff;
+            height: 36px;
+            width: 80px;
+            font-size: 14px;
+            line-height: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            outline: none;
+
+        }
+        .navbar {
+            width: 200px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            box-shadow: inset 0 1.5px 2px 0 rgba(0, 0, 0, 0.1);
+        }
+        .navbar a{
+            text-decoration: none;
+            color: #1f1f1f;
+        }
+
+        .navbar-item {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            column-gap: 12px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .navbar-item--active, .navbar-item:hover {
+            background-color: #fbe9e7;
+            color: #FF6D00;
+        }
+
+        .navbar a:active,
+        .navbar a:focus{
+            background-color: #fbe9e7;
+            color: #FF6D00;
+        }
+         .navbar a{
+             text-decoration: none;
+             color: #1f1f1f;
+         }
+    </style>
+</head>
+
+<body>
+    <div class="header" style=" height: 56px;
+                                    display: flex;
+                                    align-items: center;
+                                    column-gap: 16px;
+                                    padding-left: 20px;">
+        <i class='bx bxs-dashboard' ></i>
+        <i class='bx bxs-building-house' ></i>
+        <h4 style=" font-weight: 700;
+                            font-size: 20px;">Quản lý hộ khẩu</h4>
+    </div>
+
+    <div style="display: flex">
+        <div class="navbar" style=" width: 200px;
+                                        height: 100%;
+                                        display: flex;
+                                        flex-direction: column;
+                                        padding: 8px;
+                                        box-shadow: inset 0 1.5px 2px 0 rgba(0, 0, 0, 0.1);">
+            <div class="navbar-item" style="margin-top: 12px;
+                                                display: flex;
+                                                align-items: center;
+                                                column-gap: 12px;
+                                                padding: 8px 16px;
+                                                border-radius: 4px;
+                                                cursor: pointer;" >
+                <i class='bx bx-home' ></i>
+                <span class="navbar-text">Trang chủ</span>
+            </div>
+            <a class="navbar-item" style="text-decoration: none" th:href="@{/residence-booklet}">
+                <i class='bx bx-group' ></i>
+                <span class="navbar-text">Hộ khẩu</span>
+            </a>
+            <a class="navbar-item navbar-item--active">
+                <i class='bx bx-bar-chart-alt-2' th:href="@{/statics-population}"></i>
+                <span class="navbar-text">Thống kê</span>
+            </a>
+            <a class="navbar-item" th:href="@{/reflect}">
+                <i class='bx bx-notepad' ></i>
+                <span class="navbar-text">Phản ánh</span>
+            </a>
+        </div>
+        <div class="container-xxl content" style="background-color: #edf1f5;height: 650px">
+            <div class="content-header">
+                <a class="content-header-combobox" style="text-decoration: none;color: #1f1f1f" th:href="@{/residence-booklet}">
+                    <div class="icon icon-left"></div>
+                    <span>Thống kê</span>
+                </a>
+            </div>
+
+            <div>
+                <div class="filter-wrapper" >
+                    <div class="filter-text" >
+                        <form th:action="@{/search}"
+                              th:object="${searchDto}"
+                              method="post"
+                        >
+                            <input th:field="*{search}" class="input input-search" id="search" placeholder="Tìm kiếm địa chỉ nơi cấp, mã nhân khẩu"/>
+                            <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
+                        </form>
+                    </div>
+                    <form th:action="@{/filter}"
+                          th:object="${ageDto}"
+                          method="post"
+                          class="filter-text" style="padding-top: 10px">
+                        <div style="padding-top: 5px;">Độ tuổi:</div>
+                        <input class="input-loc" id="dateBegin" placeholder="Từ" name="ageBegin"
+                               th:field="*{begin}"
+                        />
+                        <div style="padding-top: 5px;">
+                            <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                            </svg>
+                        </div>
+                        <input th:field="*{end}" class="input-loc" id="dateEnd" placeholder="Đến" name="ageEnd"/>
+                        <button class="btn btn-outline-primary" type="submit">Thống kê độ tuổi</button>
+                        <!--<label style="padding-top: 5px;padding-left: 600px">Giới tính</label>
+                        <select id="select" class="combobox-item">
+                            <option value="null">Nothing</option>
+                            <option value="0">Nam</option>
+                            <option value="1">Nữ</option>
+                        </select>!-->
+                    </form>
+                    <div style="margin-bottom: 20px">
+                        <button class="btn btn-outline-primary" onclick="window.location.href='/statics-population'">Làm mới</button>
+                    </div>
+                </div>
+            </div>
+            <!--table-->
+            <div class="container">
+                <table class="table" style="background-color: white">
+                    <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Họ và tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+                    <tr th:each="population: ${populations}">
+                        <td th:text="${population.id}"></td>
+                        <td th:text="${population.populationName}"></td>
+                        <td th:text="${population.dob}"></td>
+                        <td th:text="${population.gender}"></td>
+                        <td th:text="${population.birthPlace}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+        /*function timKiem() {
+            var search =document.getElementById('search').value;
+            var dateBegin =document.getElementById('dateBegin').value;
+            var dateEnd =document.getElementById('dateEnd').value;
+            var gioiTinh =document.getElementById('select').value;
+            if (search===""&&dateBegin===""&&dateEnd===""&&gioiTinh==="null"){
+                Swal.fire({
+                    title: "Không được để trống",
+                    icon: "error"
+                });
+            }else {
+                console.log(dateEnd);
+                window.location.href="/filter"+"?search="+search+"&ageBegin="+dateBegin+"&ageEnd="+dateEnd+"&gioiTinh="+gioiTinh;
+            }
+        }*/
+    </script>
+</body>
+
+</html>

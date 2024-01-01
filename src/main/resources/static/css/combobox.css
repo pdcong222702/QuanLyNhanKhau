@@ -1,0 +1,29 @@
+.combobox-wrapper {
+    width: 250px;
+}
+
+.combobox-wrapper label {
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #1f1f1f;
+    margin-bottom: 8px;
+}
+
+.combobox-item {
+    background: #ffffff;
+    padding: 8px 4px 8px 8px;
+    height: 36px;
+    min-width: 250px;
+    font-size: 14px;
+    line-height: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    outline: none;
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}

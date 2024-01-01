@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{fragments::header}">
+</head>
+<body>
+    <div th:replace="~{fragments::sildebar}">
+    </div>
+    <div class="body">
+        <div th:replace="~{fragments::navbar}">
+        </div>
+        <div class="content">
+            <div class="content-header">
+                <div th:replace="~{fragments::content-tittle}"></div>
+                <form class="content-header-search" th:action="@{/search-residence-booklet}"
+                th:object="${search}"
+                method="post"
+                >
+                    <div class="input-wrapper input-has-icon" id="search-form"
+                         style="display:flex"
+                    >
+                        <input
+                            class="form-control"
+                            placeholder="Tìm kiếm theo tên, mã hộ khẩu"
+                            th:field="*{search}"
+                        />
+                        <button class="btn btn-outline-primary"  style="width: 80px" type="submit">
+                            <i class='bx bx-search-alt-2'></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="content-main">
+                <div class="content-bottom">
+                    <div class="filter-wrapper" >
+                        <div class="filter-text" id="open-filter">
+                            <div>Lọc sổ hộ khẩu điện tử</div>
+                            <a class="icon icon-filter"></a>
+                        </div>
+                        <form class="filter" id="filter"
+                            th:action="@{/filter-residence-booklet}"
+                              th:object="${addressDto}"
+                              method="post"
+                        >
+                            <button type="button" class="btn-close " aria-label="Close" id="close"></button>
+                            <div class="combobox-wrapper">
+                                <label>Tỉnh/ Thành phố</label>
+                                <select class="form-select" aria-label=".form-select-lg example" id="province" name="province"
+                                    th:field="*{province}"
+                                >
+                                    <option value="">Chọn tỉnh</option>
+                                </select>
+                            </div>
+                            <div class="combobox-wrapper">
+                                <label>Quận/ Huyện</label>
+                                <select class="form-select" aria-label=".form-select-lg example"
+                                        id="district" name="district" th:field="*{district}"
+                                >
+                                    <option value="">Chọn quận</option>
+                                </select>
+                            </div>
+                            <div class="combobox-wrapper">
+                                <label>Phường/ Xã</label>
+                                <select class="form-select" aria-label=".form-select-lg example"
+                                    name="ward" id="ward" th:field="*{ward}"
+                                >
+                                    <option value="">Chọn phường</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-footer">
+                                <hr>
+                                <div class="filter-button" style="justify-content: space-between">
+                                    <button class="btn btn-outline-secondary"  >Mặc định</button>
+                                    <button style="margin-right: 12px" class="btn btn-outline-primary" type="submit">Áp dụng</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="form-add">
+                        <div class="form-add-text" id="open-form-add">
+                            <i class='bx bx-plus' ></i>
+                            <div>Thêm mới sổ hộ khẩu</div>
+                        </div>
+                        <div class="form-add-content" id="form-add">
+                            <div class="form-add-content-tittle">
+                                <button type="button" class="btn-close" aria-label="Close" id="close2"></button>
+                            </div>
+                            <div th:if="${session.message}">
+                                <p class="alert alert-success" th:text="${session.message}"></p>
+                            </div>
+                            <form class="form-add-user"
+                                  th:action="@{/save_residence_booklet}"
+                                  method="post"
+                                  th:object="${residenceBookletDto}"
+                                  enctype="multipart/form-data"
+                            >
+                                <div class="input-form">
+                                    <div class="form-add-content-row" >
+                                        <div class="form-group row">
+                                            <label for="residence_booklet_code" class="col-sm-5 col-form-label">Mã sổ hộ khẩu</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="residence_booklet_code"
+                                                        name="residence_booklet_code"
+                                                        th:field="*{residenceBookletCode}"
+                                                        placeholder="Nhập mã sổ hộ khẩu"
+                                                        required
+                                                        title="Mã bắt đầu bằng chữ cái HK"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-5 col-form-label">Mã khu vực </label>
+                                            <div class="col-sm-9">
+                                                <select class="form-select" th:field="*{bookletArea}">
+                                                    <option value="KV1">KV1</option>
+                                                    <option value="KV2">KV2</option>
+                                                    <option value="KV2-NT">KV2-NT</option>
+                                                    <option value="KV3">KV3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_name" class="col-sm-5 col-form-label">Họ tên chủ hộ</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="population_name"
+                                                        name="population_name"
+                                                        placeholder="Nhập họ tên"
+                                                        th:field="*{populationName}"
+                                                        required
+                                                        title="Không được để trống"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_name" class="col-sm-5 col-form-label">Giới tính</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-select" required th:field="*{gender}">
+                                                    <option value="Nam">Nam</option>
+                                                    <option value="Nữ">Nữ</option>
+                                                    <option value="Khác">Khác</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_name" class="col-sm-5 col-form-label">Ngày sinh</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="date"
+                                                        class="form-control"
+                                                        id="gender"
+                                                        name="population_name"
+                                                        th:field="*{dob}"
+                                                        required
+                                                        title="Không được để trống"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_code" class="col-sm-10 col-form-label">CMND/CCCD chủ hộ</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="population_code"
+                                                        name="population_code"
+                                                        placeholder="CMND/CCCD"
+                                                        th:field="*{populationCode}"
+                                                        required
+                                                        pattern="\d{12}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_code" class="col-sm-10 col-form-label">Nơi cấp</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="place_of_issue"
+                                                        name="place_of_issue"
+                                                        placeholder="Nơi cấp"
+                                                        th:field="*{placeOfIssue}"
+                                                        required
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-add-content-row" >
+                                        <div class="form-group row">
+                                            <label for="population_code" class="col-sm-10 col-form-label">Ngày tạo</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="date"
+                                                        class="form-control"
+                                                        id="date_of_issue"
+                                                        name="date_of_issue"
+                                                        placeholder="CMND/CCCD"
+                                                        th:field="*{dateOfIssue}"
+                                                        required
+                                                        pattern="\d{12}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_code" class="col-sm-10 col-form-label">Dân tộc</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="ethnicity"
+                                                        name="ethnicity"
+                                                        placeholder="Nơi cấp"
+                                                        th:field="*{ethnicity}"
+                                                        required
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_code" class="col-sm-10 col-form-label">Tôn giáo</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="religion"
+                                                        name="religion"
+                                                        placeholder="Tôn giáo"
+                                                        th:field="*{religion}"
+                                                        required
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-5 col-form-label">Ảnh chủ hộ</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                    type="text" class="form-control" id="fileNameInput"
+                                                    th:field="*{imageName}"
+                                                    required
+                                                    title="Không được để trống"
+                                                >
+
+                                                <input
+                                                        type="file"
+                                                        class="form-control"
+                                                        id="fileInput"
+                                                        name="image"
+                                                        placeholder="Hộ chiếu"
+                                                        onchange="updateImageName()"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_code" class="col-sm-5 col-form-label">Địa chỉ chủ hộ</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="address"
+                                                        name="population_code"
+                                                        placeholder="Địa chỉ"
+                                                        th:field="*{address}"
+                                                        required
+                                                        title="Không đúng định dạng xã - huyện - tỉnh"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_code" class="col-sm-5 col-form-label">Nghề nghiệp</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="job"
+                                                        name="population_code"
+                                                        placeholder="Nghề nghiệp chủ hộ"
+                                                        th:field="*{job}"
+
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="population_code" class="col-sm-5 col-form-label">Nơi làm việc</label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="workPlace"
+                                                        name="population_code"
+                                                        placeholder="Nơi làm việc"
+                                                        th:field="*{workPlace}"
+                                                        required
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-add-user-button">
+                                    <button class="btn btn-outline-secondary">Mặc định</button>
+                                    <button data-bs-toggle="modal" data-bs-target="#submitModal" style="margin-left: 24px" class="btn btn-outline-primary" type="button">Xác nhận</button>
+                                </div>
+                                <div class="modal" id="submitModal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal Header -->
+                                            <div class="modal-header bg-danger">
+                                                <i class='bx bx-error' style="color: white;font-size: 16px"></i>
+                                                <p class="modal-title" style="color: white;font-size: 16px">
+                                                    Bạn chắc chắn muốn tạo sổ?</p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                        class="btn btn-outline-danger" data-bs-dismiss="modal">Quay lại</button>
+                                                <button type="submit" class="btn btn-outline-warning">Xác nhận</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-finish">
+                    <div class="content-finish-tittle">Danh sách sổ hộ khẩu điện tử</div>
+                    <div class="list-card">
+                        <th:block th:each="entry: ${residencePopulationMap}" >
+                            <div class="item">
+                                <div class="item-main">
+                                    <img th:src="@{/images/{name} (name=${entry.value.imageName})}"/>
+                                    <div class="item-content">
+                                        <div>
+                                            <h5>Mã sổ hộ khẩu: </h5>
+                                            <h5 th:text="${entry.key.residenceBookletCode}"></h5>
+                                        </div>
+                                        <div>
+                                            <p>Mã khu vực: </p>
+                                            <p th:text="${entry.key.bookletArea}"></p>
+                                        </div>
+                                        <div>
+                                            <p>Tên chủ hộ: </p>
+                                            <p th:text="${entry.value.populationName}"></p>
+                                        </div>
+                                        <div>
+                                            <p>CCCD chủ hộ: </p>
+                                            <p th:text="${entry.value.populationCode}"></p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="item-function">
+                                    <a  class="btn btn-outline-primary"
+                                        th:href="@{/populations/{id} (id=${entry.key.id})}"
+                                    >
+                                        Xem thông tin
+                                    </a>
+                                    <a  th:href="@{/residence-booklet-split/{id}(id=${entry.key.id})}" class="btn btn-outline-primary">
+                                        Tách khẩu
+                                    </a>
+                                    <a th:href="@{/residence-booklet-move/{id}(id=${entry.key.id})}" class="btn btn-outline-primary">
+                                        Di chuyển
+                                    </a>
+
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link"  aria-label="Previous">
+                                  <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <span >1</span>
+                                </a>
+                            </li>
+                            <li class="page-item" >
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+    <script src="./js/house-hold.js"></script>
+</body>
+</html>

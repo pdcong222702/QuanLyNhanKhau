@@ -1,0 +1,45 @@
+.header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+    padding-left: 20px;
+}
+
+.header h4 {
+    font-weight: 700;
+}
+
+.form-login{
+    height: auto;
+    width: 400px;
+    margin-left: 560px;
+    margin-top: 80px;
+    box-shadow:  0 1.5px 2px 0 rgba(0, 0, 0, 0.1);
+
+    
+}
+.form-tittle{
+    font-size: 24px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+.form-outline{
+    margin: 0px 10px 0px 10px;
+   
+}
+
+.btn{
+    margin-left: 150px;
+}
+
+.col2{
+    text-align: center;
+    margin-bottom: 10px;
+    
+}
+
+.col a, .col2 a{
+    color: black;
+    text-decoration: none;
+}
